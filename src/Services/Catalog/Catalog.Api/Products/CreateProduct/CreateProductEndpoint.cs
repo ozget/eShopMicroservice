@@ -21,11 +21,11 @@ namespace Catalog.Api.Products.CreateProduct
                     return Results.Created($"/products/{response.Id}", response);
 
                 })
-            .WithName("CreateProduct") //http post adı
-            .Produces<CreateProductResponse>(StatusCodes.Status201Created)
-            .ProducesProblem(StatusCodes.Status400BadRequest)
-            .WithSummary("Create Product")
-            .WithDescription("Create Product");
+                .WithName("CreateProduct") //http post adı
+                .Produces<CreateProductResponse>(StatusCodes.Status201Created)
+                .ProducesProblem(StatusCodes.Status400BadRequest)
+                .WithSummary("Create Product")
+                .WithDescription("Create Product");
         }
     }
 }
