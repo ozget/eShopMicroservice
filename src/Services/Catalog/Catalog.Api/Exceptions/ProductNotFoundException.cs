@@ -1,8 +1,9 @@
-﻿namespace Catalog.Api.Exceptions
+﻿
+namespace Catalog.Api.Exceptions
 {
-    public class ProductNotFoundException:Exception
+    public class ProductNotFoundException:NotFoundException
     {
-        public ProductNotFoundException(Guid Id):base("Product not foud! {@Id}")
+        public ProductNotFoundException(Guid Id):base("Product",Id)
         {
                 
         }
