@@ -6,6 +6,7 @@ builder.Services.AddMediatR(config =>
 {   //komut ve sorgularýn nerede olacagýný söyler
     config.RegisterServicesFromAssembly(typeof(Program).Assembly);
     config.AddOpenBehavior(typeof(ValidationBehavior<,>));//pipeline
+    config.AddOpenBehavior(typeof(LoggingBehavior<,>));//pipeline
 });
 
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
