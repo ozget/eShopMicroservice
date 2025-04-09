@@ -7,9 +7,10 @@
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
+            //AsParameters PageNumber,PageSize parametrelerden alabilmek için yazıyoruz
             app.MapGet("/products", async ([AsParameters] GetProductRequest request, ISender sender) =>
             {
-                var query = request.Adapt<GetProductQuery>();
+                var query = request.Adapt<GetProductQuery>();// request i GetProductQuery dönüştürüyoruz
 
                 var result = await sender.Send(query);
 

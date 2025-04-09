@@ -1,4 +1,8 @@
 
+
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -21,15 +25,25 @@ builder.Services.AddMarten(opts =>
     opts.Connection(builder.Configuration.GetConnectionString("Database")!);
 }).UseLightweightSessions();//crud iþlemleri icin bunu kullandýk
 
+if (builder.Environment.IsDevelopment())// sadece geliþtirme ortamýnda ve ilk program calýþtýrýldýgýnda oluþacak
+    builder.Services.InitializeMartenWith<CatalogInitialData>();
+
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();//dependency injection
 
-
+builder.Services.AddHealthChecks()
+    .AddNpgSql(builder.Configuration.GetConnectionString("Database"));
 
 var app = builder.Build();
 
 app.MapCarter();
 
 app.UseExceptionHandler(op =>{});
+
+app.UseHealthChecks("/health",
+    new HealthCheckOptions
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });//json formatýnda HealthCheck görmek icin 
 
 app.Run();
