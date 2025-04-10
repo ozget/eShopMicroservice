@@ -9,6 +9,15 @@ builder.Services.AddMediatR(config =>
     config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 });
 
+builder.Services.AddMarten(opts =>
+{
+    opts.Connection(builder.Configuration.GetConnectionString("Database")!);
+    opts.Schema.For<ShoppingCart>().Identity(x => x.UserName);//bir Id bulunmadýðý için unique bir deðer olduðunu söylüyoruz
+}).UseLightweightSessions();
+
+
+
+
 
 //http pipeline
 var app = builder.Build();
