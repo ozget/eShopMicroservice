@@ -15,13 +15,14 @@ builder.Services.AddMarten(opts =>
     opts.Schema.For<ShoppingCart>().Identity(x => x.UserName);//bir Id bulunmadýðý için unique bir deðer olduðunu söylüyoruz
 }).UseLightweightSessions();
 
-
+builder.Services.AddScoped<IBasketRepository,BasketRepository>();
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();    
 
 
 
 //http pipeline
 var app = builder.Build();
 app.MapCarter();
-
+app.UseExceptionHandler(op => {  });
 
 app.Run();

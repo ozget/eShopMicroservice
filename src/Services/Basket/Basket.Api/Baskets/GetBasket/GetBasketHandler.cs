@@ -7,11 +7,14 @@ namespace Basket.Api.Baskets.GetBasket
 
 
 
-    public class GetBasketQueryHandler : IQueryHandler<GetBasketQuery, GetBasketResualt>
+    public class GetBasketQueryHandler(IBasketRepository repository) : IQueryHandler<GetBasketQuery, GetBasketResualt>
     {
         public async Task<GetBasketResualt> Handle(GetBasketQuery query, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var basket = await repository.GetBasketAsync(query.UserName);
+
+            return  new GetBasketResualt(basket);
+           
         }
     }
 }

@@ -10,3 +10,4 @@ global using Basket.Api.Models;
 global using Carter;
 global using Marten;
 global using Basket.Api.Exceptions;
+global using Basket.Api.Data;
