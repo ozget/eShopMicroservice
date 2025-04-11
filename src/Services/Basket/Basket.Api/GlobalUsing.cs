@@ -11,3 +11,5 @@ global using Carter;
 global using Marten;
 global using Basket.Api.Exceptions;
 global using Basket.Api.Data;
+global using System.Text.Json;
+global using Microsoft.Extensions.Caching.Distributed;
