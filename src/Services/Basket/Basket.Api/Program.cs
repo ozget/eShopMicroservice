@@ -1,5 +1,6 @@
 
 
+
 var builder = WebApplication.CreateBuilder(args);
 //dependency injection kýsmý
 
@@ -27,14 +28,25 @@ builder.Services.AddStackExchangeRedisCache(options =>
 });
 
 
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
-builder.Services.AddExceptionHandler<CustomExceptionHandler>();    
+builder.Services.AddHealthChecks()
+    .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
+    .AddRedis(builder.Configuration.GetConnectionString("Redis")!);
+
 
 
 
 //http pipeline
 var app = builder.Build();
 app.MapCarter();
+
 app.UseExceptionHandler(op => {  });
+
+app.UseHealthChecks("/health",
+    new HealthCheckOptions
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });//json formatýnda HealthCheck görmek icin 
 
 app.Run();
